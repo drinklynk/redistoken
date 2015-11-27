@@ -24,7 +24,12 @@ var RedisToken = module.exports = function(opts) {
 RedisToken.prototype.set = function(data, done) {
 	// Create connection if not already created
 	if (!this.conn) {
-		this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);
+		if (this.opts.redisOpts && this.opts.redisOpts.url) {
+			this.conn = redis.createClient(this.opts.redisOpts);
+		} else {
+			this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);	
+		}
+		
 	}
 
 	this.generateKey(function(err, token) {
@@ -65,7 +70,12 @@ RedisToken.prototype.set = function(data, done) {
 RedisToken.prototype.get = function(token, done) {
 	// Create connection if not already created
 	if (!this.conn) {
-		this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);
+		if (this.opts.redisOpts && this.opts.redisOpts.url) {
+			this.conn = redis.createClient(this.opts.redisOpts);
+		} else {
+			this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);	
+		}
+		
 	}
 
 	// Prefix key
@@ -98,7 +108,12 @@ RedisToken.prototype.get = function(token, done) {
 RedisToken.prototype.generateKey = function(done) {
 	// Create connection if not already created
 	if (!this.conn) {
-		this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);
+		if (this.opts.redisOpts && this.opts.redisOpts.url) {
+			this.conn = redis.createClient(this.opts.redisOpts);
+		} else {
+			this.conn = redis.createClient(this.opts.redisPort, this.opts.redisHost, this.opts.redisOpts);	
+		}
+		
 	}
 
 	randomToken.generateKey({
